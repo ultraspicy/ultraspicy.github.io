@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ed25519.io/sitemap-index.xml
