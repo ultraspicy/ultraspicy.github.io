@@ -15,6 +15,9 @@ draft: false
 In this article, I will share a generic way to build a search system that is extensible and flexible, and show how this design paid off over the long arc of development.
 
 ## Layer of search system
+
+![build-search-layer](./images/build-search-layer.svg)
+
 In general, we can think of a end-to-end search a layered cake
  - layer 0 Apache Lucene: the core search engine. It gives you the most fundational search capability, for example, text analysis, inverted index construction, and relevance-ranked querying. 
  - layer 1 OpenSearch: distributed search and analytics engine. It wraps Lucene and adds everything you need to run search as a service: a REST/JSON API, clustering and sharding across nodes, replication, aggregations.
