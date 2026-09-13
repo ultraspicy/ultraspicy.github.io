@@ -3,7 +3,7 @@ title: Hello, world
 description: The first post — and a quick tour of how to write here.
 pubDate: 2026-08-15
 tags: [meta]
-draft: true
+draft: false
 ---
 
 Welcome to the blog. This first post doubles as a cheat sheet for writing new ones.
