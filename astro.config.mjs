@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   // Your production URL. Update this if you use a different domain.
-  site: 'https://ed25519.io',
+  site: 'https://ultraspicy.github.io',
   integrations: [sitemap()],
   markdown: {
     shikiConfig: {
