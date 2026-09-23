@@ -12,11 +12,12 @@ Fundamantal topic
  - What is a DB transaction
  - From request to response, how TCP works 
  - What is a KV cache 
- - Kep ML concepts that need to recite
+ - Key ML concepts that need to RECITE
 
 Learning Notes
  - From Andrew K, how to build a LLM
- - Zero Knowledge Proof 101
+ - Applied Zero Knowledge Proof 101, from CS-355
+ - Paper walk through: Image and Video Provanance 
 
 Recurring software engineering problems
  - ~~How to design search system (Glean)~~
