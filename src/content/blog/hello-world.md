@@ -1,11 +1,34 @@
 ---
-title: Hello, world
+title: Planned Topic
 description: The first post — and a quick tour of how to write here.
 pubDate: 2026-08-15
 tags: [meta]
 draft: false
 ---
+Several topics in mind, this is for myself 
 
+Fundamantal topic
+ - Programming language spectrum, Python, Java, Go and Rust
+ - What is a DB transaction
+ - From request to response, how TCP works 
+ - What is a KV cache 
+ - Kep ML concepts that need to recite
+
+Learning Notes
+ - From Andrew K, how to build a LLM
+ - Zero Knowledge Proof 101
+
+Recurring software engineering problems
+ - ~~How to design search system (Glean)~~
+ - Message Ordering in Distributed System
+ - How to design a batch endpoint
+ - how to design a workflow orchestration framework (Cadence, Temporal)
+ - From SGLang and vLLM, design a performant inference engine
+ - How to build a monorepo
+ - How to build a ML platform
+ - Kubernete deep dive
+ - Tokio deep dive
+<!-- 
 Welcome to the blog. This first post doubles as a cheat sheet for writing new ones.
 
 ## Writing a post
@@ -47,4 +70,4 @@ path. Astro optimizes anything referenced this way:
 ![A simple system diagram](./images/system-diagram.svg)
 ```
 
-That's it. Add a new file, write, commit, push — it's live.
+That's it. Add a new file, write, commit, push — it's live. -->
