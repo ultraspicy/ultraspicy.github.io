@@ -1,13 +1,16 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  headings?: MarkdownHeading[];
 }
 
-const { post } = Astro.props;
+const { post, headings = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, tags } = post.data;
 ---
 
@@ -28,6 +31,7 @@ const { title, description, pubDate, updatedDate, tags } = post.data;
         )
       }
     </div>
+    <TableOfContents headings={headings} />
     <slot />
   </article>
   <hr />
