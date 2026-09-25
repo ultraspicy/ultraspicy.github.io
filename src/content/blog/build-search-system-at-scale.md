@@ -1,5 +1,5 @@
 ---
-title: A generic way to build search system at scale
+title:  Build Enterprise Search at Scale
 description: built a high-performance search platform ingesting heterogeneous data with utter clarity and dev speed
 pubDate: 2026-09-15
 tags: [backend, platform]
