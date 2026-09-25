@@ -9,7 +9,7 @@ draft: false
 ## Introduction 
 Building a consistent state downstream is one of the most common pipeline tasks. This problem can be abstracted as the following diagram 
 
-![build-search-layer](./images/eventually-consistent-consumer-system-diagram.svg)
+![system-diagram](./images/eventual-consistent-consumer-system-diagram.svg)
 
 The goal is for the consumer to converge to the same state as the source. 
 
@@ -55,7 +55,8 @@ Similar to the producer's event timestamp, now we fully rely on the producer to 
 
 #### Combining all options
 Given all options and their limitations, the decision tree can be designed as follows for incoming message m:
-  0. No stored mark             -> accept.
+![decision-flow](./images/eventual-consistent-consumer-decision-flow.svg)
+  <!-- 0. No stored mark             -> accept.
   1. m.partition == -1          -> accept. Intentional disable as an operational escape hatch
   2. m.(_cluster, _partition) == s.(_cluster, _partition), both real partitions
                                 -> m.offset > s.offset: accept
@@ -68,7 +69,7 @@ Given all options and their limitations, the decision tree can be designed as fo
   4. Else compare custom_offset field  
                                 -> greater: or equal accepts
                                 -> smaller: drop
-                                -> missing on either side: accept, emit metric
+                                -> missing on either side: accept, emit metric -->
 
 Noted this is not a silver bullet but rather an example good for most cases:
  - Rule 3 compares the epoch first to survive failovers. This assumes a monotonically increasing epoch; with an identifier-only epoch, treat a mismatch as not comparable and fall through to rule 4.
@@ -101,16 +102,14 @@ You may ask why we schedule a retry from A's side at all, given the reverse path
 #### Case 2: Update race
 An A event sets a reference to B, and B is updated, within milliseconds of each other on different consumer threads. The reverse path finds A by the link in the served view, and the served view trails the store. Any B event that lands inside that window, for an A whose link was just set or changed, finds no A to rebuild. Co-partitioning A and B onto one thread would remove the race, but many As reference one B, so a B event cannot be routed to every A's partition.
 
-![build-search-layer](./images/eventually-consistent-consumer-system-diagram.svg)
+![race-update](./images/eventual-consistent-consumer-race-update.svg)
 
 The fix is a hedge from A's side. Whenever an An event sets or changes its link, keep a snapshot of the B state that was merged (B_v1), and schedule a check for a few seconds later, long enough for any racing write to have landed.
-
-The fix is a hedge from A's side. Whenever an A event sets or changes its link, keep a snapshot of the B state that was merged (B_v1), and schedule a check for a few seconds later, long enough for any racing write to have landed.
 
 At retry:
  - Guard. Read the served view of A 
     - The view shows a newer link. Return; the new link's own check covers it.
-    - The view already shows B_v2.Return; the reverse path won.
+    - The view already shows B_v2. Return; the reverse path won.
     - The view shows neither, because the forward write has not propagated yet. Reschedule the check once.
     - The view shows B_v1, go to Recompute.
  - Recompute. Build the latest (A, B) by fetching B from the store. In the common no-race case, recompute finds B unchanged and writes nothing. In rare cases, we rebuild the joint view of (A, B_v2) by keeping the latest B.
