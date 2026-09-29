@@ -11,8 +11,8 @@ Fundamantal topic
  - Programming language spectrum, Python, Java, Go and Rust
  - What is a DB transaction
  - From request to response, how TCP works 
+ - (WIP) Key ML concepts that need to RECITE
  - What is a KV cache 
- - Key ML concepts that need to RECITE
 
 Learning Notes
  - From Andrew K, how to build a LLM
@@ -21,7 +21,7 @@ Learning Notes
 
 Recurring software engineering problems
  - ~~How to design search system (Glean)~~
- - Message Ordering in Distributed System
+ - ~~Message Ordering in Distributed System~~
  - How to design a batch endpoint
  - how to design a workflow orchestration framework (Cadence, Temporal)
  - From SGLang and vLLM, design a performant inference engine
