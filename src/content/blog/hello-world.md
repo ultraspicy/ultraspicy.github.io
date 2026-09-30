@@ -5,19 +5,15 @@ pubDate: 2026-08-15
 tags: [meta]
 draft: false
 ---
-Several topics in mind, this is for myself 
+Several topics in mind, this is for myself
 
 Fundamantal topic
  - Programming language spectrum, Python, Java, Go and Rust
  - What is a DB transaction
- - From request to response, how TCP works 
+ - From request to response, how TCP works
  - (WIP) Key ML concepts that need to RECITE
- - What is a KV cache 
-
-Learning Notes
- - From Andrew K, how to build a LLM
- - Applied Zero Knowledge Proof 101, from CS-355
- - Paper walk through: Image and Video Provanance 
+ - Attention at its finest
+ - What is a KV cache
 
 Recurring software engineering problems
  - ~~How to design search system (Glean)~~
@@ -29,7 +25,13 @@ Recurring software engineering problems
  - How to build a ML platform
  - Kubernete deep dive
  - Tokio deep dive
-<!-- 
+
+Learning Notes
+ - From Andrew K, how to build a LLM
+ - Applied Zero Knowledge Proof 101, from CS-355
+ - pets27: Paper walk through: zk-cinema, Image and Video Provanance
+ - (WIP) Mathmatics of General Relativity
+<!--
 Welcome to the blog. This first post doubles as a cheat sheet for writing new ones.
 
 ## Writing a post

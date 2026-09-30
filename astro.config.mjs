@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,6 +10,9 @@ export default defineConfig({
   site: 'https://ultraspicy.github.io',
   integrations: [sitemap()],
   markdown: {
+    // LaTeX math: $inline$ and $$display$$ rendered with KaTeX.
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
     shikiConfig: {
       // Code block themes for light and dark mode.
       themes: {
