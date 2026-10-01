@@ -11,7 +11,7 @@ Fundamantal topic
  - Programming language spectrum, Python, Java, Go and Rust
  - What is a DB transaction
  - From request to response, how TCP works
- - (WIP) Key ML concepts that need to RECITE
+ - ~~Key ML concepts that need to RECITE~~
  - Attention at its finest
  - What is a KV cache
 
