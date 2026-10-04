@@ -1,7 +1,7 @@
-# ed25519.io
+# ultraspicy.github.io
 
 Personal blog, built with [Astro](https://astro.build) and deployed to GitHub
-Pages at [ed25519.io](https://ed25519.io).
+Pages at [ultraspicy.github.io](https://ultraspicy.github.io).
 
 ## Writing
 
