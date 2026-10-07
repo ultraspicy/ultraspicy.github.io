@@ -20,6 +20,7 @@ Similar to how we define a position in one-dimension vector via $x$, two-dimensi
 An object's entire history, where it was at every instant, traces out a curve in spacetime. This curve is its worldline. We build coordinate system to describe the worldline, but the curve itself exists independently of coordinates, only its description changes.
 
 ### 2.3 Lorentz transformation
+![lorentz](./images/lorentz.svg)
 After the definition of spacetime event $e = (\vec{x}, t)$ and worldline, we can develop our first important formula: the Lorentz transformation. It reveals the relation of two inertial coordinates $(\vec{x}, t)$ and $(\vec{x^{\prime}}, t^{\prime})$. We assume
 - Relativity: physics looks the same in any inertial frame. Changing your velocity does not change the laws.
 - Isotropy: physics looks the same in any direction. Rotating your apparatus does not change the laws. In particular $+x$ and $−x$ are equivalent, just opposite direction.
@@ -275,6 +276,7 @@ $$
 c^2 \left(\frac{d\tau}{dt}\right)^2 + \left(\frac{dx}{dt}\right)^2 = c^2
 \end{aligned} \tag{31}
 $$
+![speed-of-light](./images/speed-of-light.svg)
 
 Here $t$ and $x$ are the coordinates of an inertial frame S, and $\tau$ is the proper time of the object. The first' term measures how fast the object's own time advances compared with the time of S, and the second how fast it advances through space of S.
 

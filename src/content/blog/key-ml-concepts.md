@@ -64,7 +64,7 @@ maps each token to a vector that captures aspects of its meaning. As a degenerat
 
 As an idealized picture, we can imagine each dimension of the embedding vector answering one question about the word. If dimension $i$ encodes "is it a verb?", then $e_i(\text{eat})$ would be large, $e_i(\text{dog})$ small, and $e_i(\text{love})$ somewhere in between, since a single fixed vector must represent both of its senses. (Resolving which sense is meant in a given sentence is the job of later layers, such as attention.)
 
-In practice, learned embeddings don't align features with individual axes. Features correspond to *directions* in the space, and it helps when different features point in nearly orthogonal directions, so that changing one, like "is it a verb", doesn't disturb another, like "is it positive or negative". High-dimensional spaces make this easy: they contain far more nearly orthogonal directions than their dimensions. Using Google's Word2Vec
+In practice, learned embeddings don't align features with individual axes. Features correspond to *directions* in the space, and it helps when different features point in nearly orthogonal directions, so that changing one, like "is it a verb", doesn't disturb another, like "is it positive or negative". High-dimensional spaces make this easy: they contain far more nearly orthogonal directions than their dimensions. Using Google's Word2Vec as an example
 
 $$
 \vec{v}_{\text{love}} = \begin{bmatrix} -0.05371 & 0.03857 & 0.08349 & \dots & -0.00705 \end{bmatrix} \in \mathbb{R}^{1 \times 300}
