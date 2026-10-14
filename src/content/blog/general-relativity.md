@@ -282,8 +282,105 @@ Here $t$ and $x$ are the coordinates of an inertial frame S, and $\tau$ is the p
 
 In other words, giving object some speed w.r.t a coordinate just redistributes how it advances between time and space. Using ourselves as the coordinate $S$, then for light whose $\frac{dx}{dt} = c$, its proper time ratio is 0, meaning light can experience the whole life of universe instantly, although we feel the universe lasts billions of years.
 
-
 ## 3. Geodesics and Christoffel Symbols
+### 3.1 Geodesics definition
+In Euclidean geometry, the straight line is the shortest among all paths sharing the same endpoints. Geodesics are a generalization of this definition: it is the straightest path sharing the same endpoints on a curved surface (more strictly, manifold). A straight line on a flat surface is a geodesic, just as an arc of a great circle on a sphere is. General Relativity states that free-falling objects' natural movement follows the geodesics of spacetime.
+
+Imagine an apple falling from a tree toward us. Counterintuitively, the apple is in free fall, so it is following its natural motion along a geodesic, whereas we are the ones accelerating in spacetime, because the ground is pushing on us. When an object feels no force other than gravity (later we will explain in full details why gravity is not a force), it follows its natural motion and its trajectory is a geodesic. Mathematically,
+
+$$
+\begin{aligned}
+\frac{d \mathbf{v}}{d \tau} = 0
+\end{aligned} \tag{32}
+$$
+and we can decompose $\mathbf{v}$ into basis vectors
+$$
+\begin{aligned}
+\mathbf{v} = v^{\alpha}\mathbf{e}_{\alpha}
+\end{aligned} \tag{33}
+$$
+
+where $\alpha \in \{0,1\}$ for the two-dimensional case of our example. Substituting (33) into (32) gives
+
+$$
+\begin{aligned}
+\frac{d v^{\alpha}\mathbf{e}_{\alpha} }{d \tau} = 0
+\end{aligned} \tag{34}
+$$
+
+Further we expand (34)
+$$
+\begin{aligned}
+\frac{d v^{\alpha}\mathbf{e}_{\alpha} }{d \tau}  = \frac{d v^{\alpha}}{d \tau}\mathbf{e_{\alpha}} + \frac{d \mathbf{e}_{\alpha}}{d \tau} v^{\alpha} = 0
+\end{aligned} \tag{35}
+$$
+
+The basis vectors $\mathbf{e}_\alpha$ is attached to the coordinate grid, so it is a function of the coordinates $x^\beta, \beta \in \{0, 1\}$. Along the path, the coordinates are functions of $\tau$. The chain rule gives
+
+$$
+\begin{aligned}
+\frac{d\mathbf{e}_{\alpha}}{d\tau} = \frac{\partial \mathbf{e}_{\alpha}}{\partial x^\beta} \frac{dx^\beta}{d\tau} = \frac{\partial \mathbf{e}_\alpha}{\partial x^\beta} v^\beta
+\end{aligned} \tag{36}
+$$
+
+using $v^\beta = \frac{dx^\beta}{d\tau}$.
+
+### 3.2 Christoffel Symbols for basis vectors
+The basis vector $\mathbf{e}_{\alpha}$ can change along grid. Write that change in terms of the basis vectors themselves and the coefficients are, by definition, the Christoffel symbols:
+
+$$
+\begin{aligned}
+\frac{\partial \mathbf{e}_{\alpha}}{\partial x^\beta} = \Gamma^\mu_{\alpha\beta}\,\mathbf{e}_\mu
+\qquad \text{for each } \alpha, \beta \in \{0, 1\}
+\end{aligned} \tag{37}
+$$
+
+Read it as: $\Gamma^\mu_{\alpha\beta}$ is the $\mu$-component of how $\mathbf{e}_\alpha$ changes when you step in the $x^\beta$ direction. Note this is a derivative against the grid itself, so Christoffel symbols essentially encode the structure of the coordinate.
+
+Putting (37) into (36),
+
+$$
+\begin{aligned}
+\frac{d\mathbf{e}_\alpha}{d\tau} = v^\beta \Gamma^\mu_{\alpha\beta} \mathbf{e}_\mu
+\end{aligned} \tag{38}
+$$
+
+(38) shows that the change rate of basis vector w.r.t proper time is a product of the change rate of the grid $\Gamma$ and the velocity components, summed over directions.
+Combining (35) and (38) together, here both $\alpha$ and $\mu$ are index variables, we get
+
+$$
+\begin{aligned}
+\left(\frac{d v^{\mu}}{d \tau} + v^\alpha v^\beta \Gamma^\mu_{\alpha\beta}\right) \mathbf{e}_\mu = 0
+\end{aligned} \tag{39}
+$$
+
+The basis vectors are linearly independent, so each coefficient must vanish:
+
+$$
+\begin{aligned}
+\frac{d v^{\mu}}{d \tau}  = -v^\alpha v^\beta \Gamma^\mu_{\alpha\beta}
+\end{aligned} \tag{40}
+$$
+
+### 3.3 Christoffel Symbols in flat spacetime
+There is no curvature in a flat spacetime, so we can use Cartesian coodinate where $e_{\alpha}$ is a constant along the grid. Use (37), we get
+$$
+\begin{aligned}
+\frac{\partial \mathbf{e}_{\alpha}}{\partial x^\beta} = \Gamma^\mu_{\alpha\beta}\,\mathbf{e}_\mu = 0 \implies  \Gamma^\mu_{\alpha\beta} = 0
+\end{aligned} \tag{41}
+$$
+
+From (40), trivially
+
+$$
+\begin{aligned}
+\frac{d v^{\mu}}{d \tau}  = -v^\alpha v^\beta \Gamma^\mu_{\alpha\beta} = 0
+\end{aligned} \tag{42}
+$$
+
+In other words, an object's velocity components (both space and time components) will not change w.r.t its proper time. The spatial components give Newton's first law: a free object stays at rest or moves in a straight line at constant speed.
+
+### 3.4 Christoffel Symbols and gravitational acceleration
 
 ## 4. Metric Tensor
 
@@ -292,3 +389,16 @@ In other words, giving object some speed w.r.t a coordinate just redistributes h
 ## 6. Energy fluxes and Einstein Equation
 
 ## 7. Practical problems and Simulation of Sagittarius A*
+
+<!-- The surface below is the equatorial slice of the Schwarzschild geometry embedded in flat 3D space (Flamm's paraboloid). Drag to rotate, scroll to zoom. The black ring is the event horizon $r = r_s$; the white rings mark the photon sphere at $1.5\,r_s$, the innermost stable circular orbit at $3\,r_s$, and a reference orbit at $6\,r_s$.
+
+<iframe
+  src="/simulations/schwarzschild.html"
+  title="Schwarzschild embedding diagram"
+  width="100%"
+  height="520"
+  loading="lazy"
+  style="border: 0; border-radius: 8px;"
+></iframe> -->
+
+Q1, using Schwarzschild metric, prove a free falling apple has $\frac{D\mathbf{u}}{d\tau} = 0$

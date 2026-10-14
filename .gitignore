@@ -22,3 +22,6 @@ pnpm-debug.log*
 # editors
 .vscode/
 .idea/
+
+# python virtual environment
+.venv/

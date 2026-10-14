@@ -1,0 +1,5 @@
+numpy
+plotly
+matplotlib
+# optional, for PNG export from plotly
+# kaleido

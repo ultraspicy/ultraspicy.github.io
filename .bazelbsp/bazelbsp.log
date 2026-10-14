@@ -1,0 +1,52 @@
+2026-10-14 05:06:51.570 [main] INFO    org.jetbrains.bsp.bazel.server.ServerInitializer - Starting server with args: [/home/user/ultraspicy.github.io, /home/user/ultraspicy.github.io/.bazelbsp/.bazelproject, true]
+2026-10-14 05:06:51.577 [main] INFO    org.jetbrains.bsp.bazel.server.ServerInitializer - Initializing server
+2026-10-14 05:06:51.869 [pool-2-thread-1] INFO    org.jetbrains.bsp.bazel.server.bsp.BspRequestsRunner - build/initialize call
+2026-10-14 05:06:51.951 [ForkJoinPool.commonPool-worker-1] INFO    org.jetbrains.bsp.bazel.workspacecontext.WorkspaceContextConstructor - Constructing workspace context for: ProjectView(targets=ProjectViewTargetsSection(values=[@//your/targets/here/...:all], excludedValues=[]), bazelBinary=ProjectViewBazelBinarySection(value=/home/user/ultraspicy.github.io/tools/bazel), buildFlags=null, syncFlags=null, allowManualTargetsSync=ProjectViewAllowManualTargetsSyncSection(value=false), directories=null, deriveTargetsFromDirectories=ProjectViewDeriveTargetsFromDirectoriesSection(value=false), importDepth=null, enabledRules=null, ideJavaHomeOverride=null, addTransitiveCompileTimeJars=null, transitiveCompileTimeJarsTargetKinds=null, noPruneTransitiveCompileTimeJarsPatternsSection=null, enableNativeAndroidRules=null, androidMinSdkSection=null, shardSync=null, targetShardSize=null, shardingApproach=null).
+2026-10-14 05:06:51.973 [ForkJoinPool.commonPool-worker-1] INFO    org.jetbrains.bsp.bazel.workspacecontext.WorkspaceContextConstructor - Constructing workspace context for: ProjectView(targets=ProjectViewTargetsSection(values=[@//your/targets/here/...:all], excludedValues=[]), bazelBinary=ProjectViewBazelBinarySection(value=/home/user/ultraspicy.github.io/tools/bazel), buildFlags=null, syncFlags=null, allowManualTargetsSync=ProjectViewAllowManualTargetsSyncSection(value=false), directories=null, deriveTargetsFromDirectories=ProjectViewDeriveTargetsFromDirectoriesSection(value=false), importDepth=null, enabledRules=null, ideJavaHomeOverride=null, addTransitiveCompileTimeJars=null, transitiveCompileTimeJarsTargetKinds=null, noPruneTransitiveCompileTimeJarsPatternsSection=null, enableNativeAndroidRules=null, androidMinSdkSection=null, shardSync=null, targetShardSize=null, shardingApproach=null).
+2026-10-14 05:06:51.977 [ForkJoinPool.commonPool-worker-1] INFO    org.jetbrains.bsp.bazel.bazelrunner.BazelRunner - Invoking: '/home/user/ultraspicy.github.io/tools/bazel' 'version' '--tool_tag=bazelbsp:4.0.5' '--override_repository=bazelbsp_aspect=/home/user/ultraspicy.github.io/.bazelbsp' '--curses=no' '--color=yes' '--noprogress_in_terminal_title'
+2026-10-14 05:06:51.990 [ForkJoinPool.commonPool-worker-1] ERROR   org.jetbrains.bsp.bazel.server.bsp.BspRequestsRunner - build/initialize call finishing with error
+java.util.concurrent.CompletionException: java.io.IOException: Cannot run program "/home/user/ultraspicy.github.io/tools/bazel": error=2, No such file or directory
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:315) [?:?]
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:320) [?:?]
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:649) [?:?]
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:483) [?:?]
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622) [?:?]
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165) [?:?]
+Caused by: java.io.IOException: Cannot run program "/home/user/ultraspicy.github.io/tools/bazel": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1143) ~[?:?]
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1073) ~[?:?]
+	at org.jetbrains.bsp.bazel.bazelrunner.BazelRunner.runBazelCommand(BazelRunner.kt:154) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.bazelrunner.BazelRunner.runBazelCommand$default(BazelRunner.kt:131) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.BazelBspServer.verifyBazelVersion(BazelBspServer.kt:290) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.BazelBspServer$buildServer$bspServerApi$1.invoke(BazelBspServer.kt:245) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.BazelBspServer$buildServer$bspServerApi$1.invoke(BazelBspServer.kt:241) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi.initializeServices(BspServerApi.kt:95) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi.access$initializeServices(BspServerApi.kt:76) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi$buildInitialize$1.invoke(BspServerApi.kt:106) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi$buildInitialize$1.invoke(BspServerApi.kt:103) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspRequestsRunner$runAsync$asyncRequest$1.apply(BspRequestsRunner.kt:82) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspRequestsRunner$runAsync$asyncRequest$1.apply(BspRequestsRunner.kt:81) ~[bazel-bsp-4.0.5.jar:?]
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+	... 6 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method) ~[?:?]
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:314) ~[?:?]
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:244) ~[?:?]
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1110) ~[?:?]
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1073) ~[?:?]
+	at org.jetbrains.bsp.bazel.bazelrunner.BazelRunner.runBazelCommand(BazelRunner.kt:154) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.bazelrunner.BazelRunner.runBazelCommand$default(BazelRunner.kt:131) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.BazelBspServer.verifyBazelVersion(BazelBspServer.kt:290) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.BazelBspServer$buildServer$bspServerApi$1.invoke(BazelBspServer.kt:245) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.BazelBspServer$buildServer$bspServerApi$1.invoke(BazelBspServer.kt:241) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi.initializeServices(BspServerApi.kt:95) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi.access$initializeServices(BspServerApi.kt:76) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi$buildInitialize$1.invoke(BspServerApi.kt:106) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspServerApi$buildInitialize$1.invoke(BspServerApi.kt:103) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspRequestsRunner$runAsync$asyncRequest$1.apply(BspRequestsRunner.kt:82) ~[bazel-bsp-4.0.5.jar:?]
+	at org.jetbrains.bsp.bazel.server.bsp.BspRequestsRunner$runAsync$asyncRequest$1.apply(BspRequestsRunner.kt:81) ~[bazel-bsp-4.0.5.jar:?]
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646) ~[?:?]
+	... 6 more
