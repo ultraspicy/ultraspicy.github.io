@@ -402,3 +402,4 @@ In other words, an object's velocity components (both space and time components)
 ></iframe> -->
 
 Q1, using Schwarzschild metric, prove a free falling apple has $\frac{D\mathbf{u}}{d\tau} = 0$
+
