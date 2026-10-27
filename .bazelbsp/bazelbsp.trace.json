@@ -1,4 +1,4 @@
-[Trace - 00:31:29 AM] Received request 'build/initialize - (0)'
+[Trace - 08:09:00 PM] Received request 'build/initialize - (0)'
 Params: {
   "displayName": "VS Code Bazel BSP",
   "version": "0.0.20",
@@ -21,14 +21,14 @@ Params: {
 }
 
 
-[Trace - 00:31:29 AM] Sending notification 'build/logMessage'
+[Trace - 08:09:00 PM] Sending notification 'build/logMessage'
 Params: {
   "type": 4,
   "message": "Invoking: \u0027/home/user/ultraspicy.github.io/tools/bazel\u0027 \u0027version\u0027 \u0027--tool_tag\u003dbazelbsp:4.0.5\u0027 \u0027--override_repository\u003dbazelbsp_aspect\u003d/home/user/ultraspicy.github.io/.bazelbsp\u0027 \u0027--curses\u003dno\u0027 \u0027--color\u003dyes\u0027 \u0027--noprogress_in_terminal_title\u0027"
 }
 
 
-[Trace - 00:31:29 AM] Sending response 'build/initialize - (0)'. Processing request took 99ms
+[Trace - 08:09:00 PM] Sending response 'build/initialize - (0)'. Processing request took 182ms
 Result: null
 
 

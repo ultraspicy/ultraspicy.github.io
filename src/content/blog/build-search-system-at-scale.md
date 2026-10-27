@@ -6,11 +6,11 @@ tags: [backend, platform]
 draft: false
 ---
 
-## Introduction 
+## Introduction
 **Searching** is the process of finding relevant information from a large collection of data based on what a user is looking for. At its core, a search system takes a user’s input—a keyword, phrase, or set of criteria—and returns the items that best match their intent, often ranked by how relevant each result is. This is a frequent recurring problem, for example
  - enterprise search, where users search relevant information from heterogeneous data sources (design doc, Slack, source code, team Wiki).
  - flight booking, where users search the most suitable flight given some hard constraints (landing date) and soft constraints (ticket price).
- - online shopping, where users search by some keyword, and need an ordered list depending on their own needs (latest-update, price from low to high).  
+ - online shopping, where users search by some keyword, and need an ordered list depending on their own needs (latest-update, price from low to high).
 
 In this article, I will share a generic way to build a search system that is extensible and flexible, and show how this design paid off over the long arc of development.
 
@@ -19,26 +19,26 @@ In this article, I will share a generic way to build a search system that is ext
 ![build-search-layer](./images/build-search-layer.svg)
 
 In general, we can think of an end-to-end search as a layered cake
- - layer 0 Apache Lucene: the core search engine. It gives you the most foundational search capability, for example, text analysis, inverted index construction, and relevance-ranked querying. 
+ - layer 0 Apache Lucene: the core search engine. It gives you the most foundational search capability, for example, text analysis, inverted index construction, and relevance-ranked querying.
  - layer 1 OpenSearch: distributed search and analytics engine. It wraps Lucene and adds everything you need to run search as a service: a REST/JSON API, clustering and sharding across nodes, replication, aggregations.
  - layer 2 search business layer: where we ingest heterogeneous data from various sources, define our search index, deployment strategy, data validation, and power business-specific use cases.
  - layer 3 end-user applications: apps that interact with users, construct search query and return corresponding response.
 
-This article will focus on how to build layer 2, the business layer. Layer 0 and Layer 1 can be taken for granted via OpenSearch adoption, Layer 3 is our upstream that calls our endpoint.  
+This article will focus on how to build layer 2, the business layer. Layer 0 and Layer 1 can be taken for granted via OpenSearch adoption, Layer 3 is our upstream that calls our endpoint.
 
 ## Platform Design
 
 We envision the system to be
  - A **centralized infrastructure** for search. All domain-oriented microservices use this search platform, rather than building their own.
- - Able to search **heterogeneous data** coming from different tables and data sources. For example, we want to be able to filter by fields in microservices A and B backed by MySQL, then sort by fields in microservice C backed by Apache Hive. 
+ - Able to search **heterogeneous data** coming from different tables and data sources. For example, we want to be able to filter by fields in microservices A and B backed by MySQL, then sort by fields in microservice C backed by Apache Hive.
  - **Programmatically scalable** to ingest from all data sources. It should be simple for new fields or data sources to be ingested, without requiring complex code.
- - Achieving **near-real-time data freshness** and low-latency querying overhead. This is critical for user experience and daily use cases. Data is regularly updated and these changes should be surfaced in search as quickly as possible. 
+ - Achieving **near-real-time data freshness** and low-latency querying overhead. This is critical for user experience and daily use cases. Data is regularly updated and these changes should be surfaced in search as quickly as possible.
  - Clear in **data lineage**. Given we’re working with all sorts of data sources, it’s important to easily trace the source of truth or understand the purpose of any field in search index.
  - Supporting **composable search queries** at query time. Callers should be able to create their own queries against the search index, and not rely on pre-defined queries. This is somewhat inherited from the search engine already.
 
-## Architecture 
+## Architecture
 
-There are two core data models, **index** and **fragment**. 
+There are two core data models, **index** and **fragment**.
 ![build-search-fragment-and-index](./images/build-search-fragment-and-index.svg)
 
 An index represents a searchable entity, and maps to an actual OpenSearch index. Using our flight booking example, a flight is an index, with possible fields like UUID, departure/arrival, promotion, booking, price, airline/carrier, and so on. We can run search queries like, “give me all flights landing in NYC on Sep 3rd”, or “give me all flights from United Airlines that can use this promotion code.”
@@ -49,13 +49,13 @@ Given the above, this article introduces a framework that allows an index to be 
 
 ![build-search-overview](./images/build-search-overview.svg)
 
-The data ingestion pipeline itself is composed of 2 primary steps: **bootstrap** and **live ingestion**, as shown in the above. Bootstrap establishes the initial state of the index, then live ingestion keeps the index fresh. 
+The data ingestion pipeline itself is composed of 2 primary steps: **bootstrap** and **live ingestion**, as shown in the above. Bootstrap establishes the initial state of the index, then live ingestion keeps the index fresh.
 During bootstrap, connectors are implemented behind a common interface to pull a full snapshot of each source. This is done through an Apache Spark job, allowing us to read multiple data sources in parallel and ingest data at scale. A data connector can run:
- - Partitioned parallel scans against the database. 
+ - Partitioned parallel scans against the database.
  - Offline Hive warehouse table scans. This avoids some read volume on the live database.
  - A custom implementation like RPC calls to a service.
 
-This setup allows us to easily add various data sources by defining a fragment and specifying the connector to use. The framework does all the heavy lifting, like initiating database connections, running queries in parallel, and feeding database rows into the pipeline. 
+This setup allows us to easily add various data sources by defining a fragment and specifying the connector to use. The framework does all the heavy lifting, like initiating database connections, running queries in parallel, and feeding database rows into the pipeline.
 
 Once data is loaded from the source, it’s denormalized and merged, essentially combining all the different fragments for a given UUID into a single document. For example, recall that the flight index has a field called departure/arrival location. Different flights share the same location, meaning we need to propagate location data to all flights referencing this location. All these documents are what make up an index, and are sent off to OpenSearch.
 
@@ -87,17 +87,17 @@ public class Flight {
 ```
 Later, a generator reflects over these annotations and produces the OpenSearch index mappings automatically. There’s no hand-written schema to keep in lockstep. The Java class is the single source of truth. Also, from the developer’s perspective, they just need to focus on business needs like what query to support on what field. All search internals are hidden behind the annotation implementation.
 
-### Example 2: Compose Index From Fragment 
-The index is composed of fragments. A document like a Flight isn’t owned by one team—its data is scattered across many source systems, each owned by a different domain and team. Rather than forcing a single team to own the whole document, the search platform assembles each document from fragments. Every data source contributes one fragment. Teams add new data to an index by dropping in a new fragment class independently, without touching anyone else’s code or coordinating a schema migration. 
+### Example 2: Compose Index From Fragment
+The index is composed of fragments. A document like a Flight isn’t owned by one team—its data is scattered across many source systems, each owned by a different domain and team. Rather than forcing a single team to own the whole document, the search platform assembles each document from fragments. Every data source contributes one fragment. Teams add new data to an index by dropping in a new fragment class independently, without touching anyone else’s code or coordinating a schema migration.
 
 ```java
 @DataSource(
-    dbTable = 
+    dbTable =
         @DBTable(
             cluster = "us-central-1",
             name = "`flight`",
             partition = @DBTable.Partition(numberPartitions = 25),
-            hiveTableForBootstrap = 
+            hiveTableForBootstrap =
                 @HiveTable(name = "raw_data.org.flight")));
 @Fragment (targetIndex = Flight.class)
 public class FlightFragment implements FragmentEntity, Validatable {
@@ -124,7 +124,7 @@ Following the fragment, we come to the final missing piece: config for live inge
 ## Use cases
 In the following section, we use three examples to demonstrate the flexibility of this design and the benefits of a clear boundary between platform space and user space.
 
-### Declare Once, Derive Everything 
+### Declare Once, Derive Everything
 
 A carrier's DOT number (e.g. AA-AAL, UA-UAL, B6-JBU) is an opaque identifier: upstream services search it by prefix or by a substring anywhere in the middle (b-J). A carrier’s legal name (American Airlines, Delta Air Lines, United Airlines) is plain text, and services expect prefix matching (Amer), case-insensitivity (American = american), and phrase matching (lta ai). These are fundamentally different search contracts, and in search schema, they are declared explicitly on the index field:
 
@@ -135,7 +135,7 @@ A carrier's DOT number (e.g. AA-AAL, UA-UAL, B6-JBU) is an opaque identifier: up
     sortable = true)
 private String name;
 
-// DOT number - opaque identifier contract 
+// DOT number - opaque identifier contract
 @AnalyzableField (
     termOptions = {SUBSTRING, CASE_INSENSITIVE},
     sortable = true)
@@ -163,7 +163,7 @@ public class CarrierFragment implements FragmentEntity, Skippable {
 public class FlightFragment implements FragmentEntity, Validatable {
     @Nullable
     @MappingField(targetField = "Carrier.uuid")
-    private String carrierUuid; // so platform can join on flight.carrierUuid = carrier.uuid 
+    private String carrierUuid; // so platform can join on flight.carrierUuid = carrier.uuid
 }
 ```
 Continuing our example, we earlier mentioned that the flight and carrier entities come from different data sources, but the flight index contains both flight and carrier details. Here we implement the `CarrierFragment` as a linked entity targeting the `Carrier` sub-field in the flight index, so that the document merger can join carrierUuid in the flight fragment on uuid in the carrier fragment. Everything fits into the normal fragment implementation, but we build another denormalization pipeline by a single line of the LinkedEntity annotation.
@@ -171,14 +171,14 @@ Continuing our example, we earlier mentioned that the flight and carrier entitie
 ### Declare a Fold, Get 1:N Aggregation for free
 The previous example covered the many-to-one direction: one carrier change fans out to many flight documents. The one-to-many direction shows up just as often—a flight has many bookings—and it flips the problem: instead of propagating one row into many documents, we need to fold many child rows into a single document.
 
-We model this with an aggregated fragment, split into two classes. The child fragment (BookingFragment) is a normal fragment describing one raw source row, with one addition: a `@ParentId` field declaring which parent it rolls up into. 
+We model this with an aggregated fragment, split into two classes. The child fragment (BookingFragment) is a normal fragment describing one raw source row, with one addition: a `@ParentId` field declaring which parent it rolls up into.
 
 ```java
 @Fragment(targetIndex = Flight.class)
 @DataSource(...)
 @Data
 public class BookingFragment implements BaseFragmentAggregateEntity {
-    @ParentId 
+    @ParentId
     private String flightUuid;
 
     @Id
@@ -211,8 +211,11 @@ public class BookingsFragment implements FragmentAggregateEntity<FlightFragment,
 ```
 The developer writes exactly one thing: the fold. The platform supplies everything around it, in both pipelines. During bootstrap, the Spark job groups the raw booking rows by `flightUuid` and invokes the fold once per flight. During live ingestion, when a single booking CDC event arrives, the framework looks up which sibling bookings already belong to that flight, fetches just those unchanged siblings from our store, re-runs the same fold over old-plus-new rows, and diffs the result against the current document. So one booking's change updates one element in `BookingsFragment` without rebuilding the rest of the flight, and without ever re-scanning the source table.
 
-## Conclusion 
+## Conclusion
 
 We introduce a generic way to build the business layer of search system, and the underlying idea is language-agnostic: declare a searchable entity as a business object, and let the platform derive the index, the analysis, and the data pipelines from it. The same pattern maps naturally onto other ecosystems. In Python, decorators and typed field descriptors provide the metadata, and runtime introspection plays the role of reflection. In Rust, attributes (#[search(...)]) carry the metadata and derive macros generate the mapping code at compile time, which strengthens the "code is the single source of truth" guarantee by enforcing it through the compiler. What stays constant across all of these is the principle that matters: a clear boundary between the user’s business definition and the search internals, so the platform can evolve independently of the entities built on top of it.
 
 Essentially, this boundary fell out of two questions: what’s business-specific and should stay with the service, and what’s common and can be abstracted away by the platform. Answering them consistently—across schema definition, analysis, data relations, and engine migration—is what produced a framework that’s extensible to new business use cases, sharable in its common implementations, and flexible enough to swap components independently. The benefit compounds over time: every capability the platform gains is one every entity inherits for free, and every business team’s work stays focused on what’s genuinely theirs.
+
+## Appendix
+This article is the original draft of [this blog](https://www.uber.com/us/en/blog/high-performance-search-platform) published at Uber Engineering Hub.
