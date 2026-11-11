@@ -325,7 +325,7 @@ $$
 
 using $v^\beta = \frac{dx^\beta}{d\tau}$.
 
-### 3.2 Christoffel Symbols for basis vectors
+### 3.2 Christoffel Symbols Definition
 The basis vector $\mathbf{e}_{\alpha}$ can change along grid. Write that change in terms of the basis vectors themselves and the coefficients are, by definition, the Christoffel symbols:
 
 $$
@@ -335,9 +335,9 @@ $$
 \end{aligned} \tag{37}
 $$
 
-Read it as: $\Gamma^\mu_{\alpha\beta}$ is the $\mu$-component of how $\mathbf{e}_\alpha$ changes when you step in the $x^\beta$ direction. Note this is a derivative against the grid itself, so Christoffel symbols essentially encode the structure of the coordinate.
+Read it as: $\Gamma^\mu_{\alpha\beta}$ is the $\mu$-component of how $\mathbf{e}_\alpha$ changes when you step in the $x^\beta$ direction. It shows the rate of change of basis vectors among all its directions, and more commonly written as $\partial_{\beta}\mathbf{e}_{\alpha}$.
 
-Putting (37) into (36),
+Note this is a derivative against the grid itself, so Christoffel symbols essentially encode the structure of the coordinate. Putting (37) into (36),
 
 $$
 \begin{aligned}
@@ -370,7 +370,7 @@ $$
 \end{aligned} \tag{41}
 $$
 
-From (40), trivially
+the Christoffel of Cartesian coodinate vanishes. And from (40), trivially
 
 $$
 \begin{aligned}
@@ -380,9 +380,273 @@ $$
 
 In other words, an object's velocity components (both space and time components) will not change w.r.t its proper time. The spatial components give Newton's first law: a free object stays at rest or moves in a straight line at constant speed.
 
-### 3.4 Christoffel Symbols and gravitational acceleration
-
 ## 4. Metric Tensor
+We briefly mentioned Minkowski Metric in section 2.5. This section, we introduce the formal definition of metric, then derive the relation between metric tensor and corresponding Chirstoffel symbol. Last we will revisit Minkowski Metric and introduce another more complex but interesting one: the Schwarzschild Metrics.
+
+### 4.1 Definition and examples
+Metric is defined by the dot product of two basis vectors
+$$
+\begin{aligned}
+g_{\mu\nu} = \mathbf{e}_{\mu} \cdot \mathbf{e}_{\nu}
+\end{aligned} \tag{43}
+$$
+
+For flat two-dimensional Cartesian plane with perpendicular basis $(e_x, e_y)$:
+$$
+\begin{aligned}
+g_{xx} = g_{yy} = \mathbf{e}_{x} \cdot \mathbf{e}_{x} = 1 , \qquad g_{xy} = 0
+\end{aligned} \tag{44}
+$$
+
+and its metric tensor
+$$
+\begin{aligned}
+\mathbf{g} = \begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+\end{aligned} \tag{45}
+$$
+
+and based on this, we can compute the infinitesimal distance
+
+$$
+\begin{aligned}
+ds^2= 1 \cdot dx^2 + 0 \cdot dxdy + 0 \cdot dydx + 1 \cdot dy^2 = dx^2 + dy^2
+\end{aligned} \tag{46}
+$$
+
+
+Same flat two-dimensional plane, but if we switch to polar coodinates $(r, \theta)$, given its position $P = (r\cos\theta, r\sin\theta)$. By definition,
+$$
+\begin{aligned}
+\mathbf{e}_r = \frac{dP}{dr} = (\cos\theta, \sin \theta) \\
+\mathbf{e}_{\theta} = \frac{dP}{d\theta} = (-r\sin\theta, r\cos \theta)
+\end{aligned} \tag{47}
+$$
+and its metric tensor
+$$
+\begin{aligned}
+\mathbf{g} = \begin{bmatrix}
+\mathbf{e}_r \cdot \mathbf{e}_r & \mathbf{e}_r \cdot \mathbf{e}_{\theta} \\
+\mathbf{e}_{\theta} \cdot \mathbf{e}_r & \mathbf{e}_{\theta} \cdot \mathbf{e}_{\theta}
+\end{bmatrix}
+= \begin{bmatrix}
+g_{rr} & g_{r\theta} \\
+g_{\theta r} & g_{\theta\theta}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 \\
+0 & r^2
+\end{bmatrix}
+\end{aligned} \tag{48}
+$$
+
+and similar with (46)
+$$
+\begin{aligned}
+ds^2 = r^2 + r^2\theta^2
+\end{aligned} \tag{49}
+$$
+
+### 4.2 Vector Representation and Covariant Derivative
+In this section we recap how a vector is represented in the coordinate basis and in the dual basis, then derive their corresponding covariant derivatives.
+
+Coordinate component representation is components times basis vector
+$$
+\begin{aligned}
+\mathbf{V} = V^{\mu}\mathbf{e}_{\mu}
+\end{aligned} \tag{50}
+$$
+
+For example, given basis $\mathbf{e}_{1} = (0,1), \mathbf{e}_{2} = (1,1)$, then vector $(3, 5) = 2\mathbf{e}_{1} + 3 \mathbf{e}_{2}$, thus $V^1 = 2, V^2 = 3, V^{\mu} = (2,3)$. Taking derivative and "rename the dummy index in the second term from $\mu$ to $\lambda$
+$$
+\begin{aligned}
+\nabla_{\nu}\mathbf{V} = \nabla_{\nu} (V^{\mu}\mathbf{e}_{\mu}) = (\partial_{\nu}V^{\mu})\,\mathbf{e}_{\mu} + V^{\lambda}\,\nabla_{\nu} \mathbf{e}_{\lambda}
+\end{aligned} \tag{51}
+$$
+
+By the definition of the Christoffel symbols,
+$$
+\begin{aligned}
+\nabla_{\nu} \mathbf{e}_{\lambda} = \Gamma^{\mu}_{\nu\lambda} \mathbf{e}_{\mu}
+\end{aligned} \tag{52}
+$$
+
+Replace (52) in (51),
+
+$$
+\begin{aligned}
+\nabla_{\nu}\mathbf{V} = \nabla_{\nu} \left(V^{\mu}\mathbf{e}_{\mu}\right) = \left( \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\nu\lambda} V^{\lambda} \right) \mathbf{e}_{\mu}
+\end{aligned} \tag{53}
+$$
+
+The $\mu$-component of $\nabla_\nu \mathbf{V}$ is conventionally written $\nabla_\nu V^\mu$, so (53) becomes
+
+$$
+\begin{aligned}
+\nabla_{\nu}V^{\mu} = \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\nu\lambda}V^{\lambda}
+\end{aligned} \tag{54}
+$$
+
+which is a generalized form of derivative for vector component $V^{\mu}$ moving the in the direction of $x^{\nu}$. The first term $\partial_{\nu}V^{\mu}$ is the changes of the component itself, working exactly as the partial derivitative on a plane. The second term $\Gamma^{\mu}_{\nu\lambda}V^{\lambda}$ is the contribution coming from all components projected onto $\mu$ due to the change of the basis vectors from point to point.
+
+In coordiate system we define dual vector $\mathbf{e}^{\mu}$ (superscript) as
+
+$$
+\begin{aligned}
+\mathbf{e}^{\mu}\cdot\mathbf{e}_\lambda = \delta^{\mu}_\lambda
+\end{aligned} \tag{55}
+$$
+
+and dual vector representation as
+$$
+\begin{aligned}
+\mathbf{V} = V_{\mu}\mathbf{e}^{\mu}
+\end{aligned} \tag{56}
+$$
+
+Take derivatives from both sides of (56), and replace the second index variable $\mu$ with $\lambda$
+
+$$
+\begin{aligned}
+\nabla_{\nu}\mathbf{V} = \nabla_{\nu} (V_{\mu}\mathbf{e}^{\mu}) = (\partial_{\nu}V_{\mu})\,\mathbf{e}^{\mu} + V_{\lambda}\,\nabla_{\nu} \mathbf{e}^{\lambda}
+\end{aligned} \tag{57}
+$$
+
+Take derivatives from both sides of (55), notice the right side is a constant, so its derivative equals 0,
+$$
+\begin{aligned}
+\partial_\nu \left( \mathbf{e}^{\mu}\cdot\mathbf{e}_\lambda \right) = (\nabla_\nu \mathbf{e}^{\mu})\cdot \mathbf{e}_\lambda + \mathbf{e}^{\mu}\cdot(\nabla_\nu \mathbf{e}_\lambda) = 0
+\end{aligned} \tag{58}
+$$
+
+Thus
+$$
+\begin{aligned}
+(\nabla_\nu \mathbf{e}^{\mu})\cdot \mathbf{e}_\lambda = - \mathbf{e}^{\mu}\cdot(\nabla_\nu \mathbf{e}_\lambda)
+\end{aligned} \tag{59}
+$$
+
+Replace (52) into (59)
+$$
+\begin{aligned}
+(\nabla_\nu \mathbf{e}^{\mu})\cdot \mathbf{e}_\lambda = - \Gamma^{\sigma}_{\nu\lambda}\, \mathbf{e}^{\mu}\cdot\mathbf{e}_{\sigma} = - \Gamma^{\sigma}_{\nu\lambda}\,\delta^{\mu}_{\sigma} = - \Gamma^{\mu}_{\nu\lambda} \\
+\end{aligned} \tag{60}
+$$
+
+Multiply $\mathbf{e}^{\lambda}$ from both sides,
+$$
+\begin{aligned}
+\nabla_\nu \mathbf{e}^{\mu} = - \Gamma^{\mu}_{\nu\lambda}\, \mathbf{e}^{\lambda}
+\end{aligned} \tag{61}
+$$
+
+Swap the index variables $\mu$ and $\lambda$ in (61), and replace $\nabla_\nu \mathbf{e}^{\lambda}$ in (57)
+$$
+\begin{aligned}
+\nabla_{\nu}\mathbf{V} = \left( \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\nu\mu} V_{\lambda} \right) \mathbf{e}^{\mu}
+\end{aligned} \tag{62}
+$$
+
+More commonly, we just care about one specific component $\mu$, so (62) is more commonly written as
+
+$$
+\begin{aligned}
+\nabla_{\nu}V_{\mu} = \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\nu\mu}V_{\lambda}
+\end{aligned} \tag{63}
+$$
+
+### 4.3 Metric Tensor and Christoffel Symbol
+
+We also makes two assumptions. The first assumption is spacetime is torsion-free. Torsion is a deep mathematical concept that we won't go into full details there. For simplicity, torsion-free means taking two small vectors, parallel transport one along the other, and vice versa, they will form a closed quadrilateral in the manifold. Lets see how that will impact the Christoffel symbols.
+
+Starting at point $P$ with basis $(\mathbf{e}_{\alpha}, \mathbf{e}_{\beta})$, then first move it along $\mathbf{e}_{\alpha}$. Now it is at $P' = P + \delta a \mathbf{e}_{\alpha}$. Grid vectors are defined at each point, and this small movement will change basis to be $(\mathbf{e}_{\alpha}', \mathbf{e}_{\beta}')$.  By Taylor expansion,
+$$
+\begin{aligned}
+\mathbf{e}_{\beta}' = \mathbf{e}_{\beta} + \delta a \nabla_{\alpha} \mathbf{e}_{\beta} + \text{(higher order)}
+\end{aligned} \tag{51}
+$$
+
+Then moving $P'$ along $\mathbf{e}_{\beta}$ by $\delta b$
+$$
+\begin{aligned}
+P'' = P' + \delta b \mathbf{e}_{\beta}'
+\end{aligned} \tag{52}
+$$
+
+Ignoring the higher order in taylor expansion, and combining (51) and (52)
+$$
+\begin{aligned}
+P'' = P + \delta a \mathbf{e}_{\alpha} + \delta b \mathbf{e}_{\beta} + \delta a \delta b \nabla_{\alpha} \mathbf{e}_{\beta}
+\end{aligned} \tag{53}
+$$
+
+Similary, if we transport $P$ first from $\mathbf{e}_{\beta}$ and then $\mathbf{e}_{\alpha}$, then by torsion-free assumption we will arrive at the same $P''$
+$$
+\begin{aligned}
+P'' = P + \delta a \mathbf{e}_{\alpha} + \delta b \mathbf{e}_{\beta} + \delta a \delta b \nabla_{\beta} \mathbf{e}_{\alpha}
+\end{aligned} \tag{54}
+$$
+
+From (53) and (54), we have
+$$
+\begin{aligned}
+\nabla_{\alpha} \mathbf{e}_{\beta} = \nabla_{\beta} \mathbf{e}_{\alpha}
+\end{aligned} \tag{53}
+$$
+
+By definiton of Christoffel symbol,
+$$
+\begin{aligned}
+\nabla_{\alpha} \mathbf{e}_{\beta} = \Gamma^{\mu}_{\beta\alpha} \mathbf{e}_{\mu}
+\end{aligned} \tag{54}
+$$
+
+Apply (54) to (53), we got the property of symmetry of Christoffel symbol,
+$$
+\begin{aligned}
+\Gamma^{\mu}_{\beta\alpha} = \Gamma^{\mu}_{\alpha\beta}
+\end{aligned} \tag{54}
+$$
+
+### 4.3 Minkowski Metric
+
+### 4.4 Schwarzschild Metric and Gravitational Acceleration
+
+This section is more interesting but also mathmetical heavy. We will start with a given equation of Schwarzschild Metrics and build mathematical proof to show that gravity is not a force but objects natual movement. First, lets take a look at Schwarzschild Metrics equation
+
+$$
+\begin{aligned}
+ds^2 = -(1 - \frac{r_s}{r})c^2 dt^2 + (1 - \frac{r_s}{r})^{-1}dr^2 + r^2d\theta^2 + r^2\sin^2\theta d\varphi^2
+\end{aligned} \tag{43}
+$$
+
+Schewarzschild Metrics is to describe the spacetime distortion around a stationary center mass, with coordinate $(t, r, \theta, \varphi)$. $r_s$ is called Schwarzschild radius, a constant that is only dependent on the central mass. It is more commonly known as the event horizen when talking about black hole.
+
+For 4 dimensional spacetime, so in generial its Christoffel symbol $\Gamma_{\alpha\beta}$ will have 16 components. However the simplicity of (42) is that, the matrix is diagonal. Replace $s = c\tau$ in (43)
+
+$$
+\begin{aligned}
+c^2d\tau^2 = -(1 - \frac{r_s}{r})c^2 dt^2 + (1 - \frac{r_s}{r})^{-1}dr^2 + r^2d\theta^2 + r^2\sin^2\theta d\varphi^2
+\end{aligned} \tag{44}
+$$
+
+Assuming an object is free falling from some height near earth via radical direction, so $d\theta = 0$ and $d\varphi = 0$. Divide $d\tau^2$ from (44)
+
+$$
+\begin{aligned}
+c^2 = -(1 - \frac{r_s}{r})c^2 \frac{d^2t}{d\tau^2} + (1 - \frac{r_s}{r})^{-1}\frac{d^2r}{dt^2}
+\end{aligned} \tag{45}
+$$
+
+Now lets leave (45) here and start to prove an important lemma, that is
+$$
+\begin{aligned}
+(1 - \frac{r_s}{r})c^2 \frac{dt}{d\tau} = Constant
+\end{aligned} \tag{45}
+$$
 
 ## 5. Curvature of the spacetime
 
@@ -402,4 +666,3 @@ In other words, an object's velocity components (both space and time components)
 ></iframe> -->
 
 Q1, using Schwarzschild metric, prove a free falling apple has $\frac{D\mathbf{u}}{d\tau} = 0$
-
