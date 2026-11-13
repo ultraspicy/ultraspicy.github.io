@@ -381,7 +381,7 @@ $$
 In other words, an object's velocity components (both space and time components) will not change w.r.t its proper time. The spatial components give Newton's first law: a free object stays at rest or moves in a straight line at constant speed.
 
 ## 4. Metric Tensor
-We briefly mentioned Minkowski Metric in section 2.5. This section, we introduce the formal definition of metric, then derive the relation between metric tensor and corresponding Chirstoffel symbol. Last we will revisit Minkowski Metric and introduce another more complex but interesting one: the Schwarzschild Metrics.
+We briefly mentioned Minkowski Metric in section 2.5. In this section, we introduce the formal definition of metric, then derive the relation between metric tensor and corresponding Christoffel symbol. Finally, we will revisit Minkowski Metric and introduce another more complex but interesting one: the Schwarzschild Metric.
 
 ### 4.1 Definition and examples
 Metric is defined by the dot product of two basis vectors
@@ -391,10 +391,10 @@ g_{\mu\nu} = \mathbf{e}_{\mu} \cdot \mathbf{e}_{\nu}
 \end{aligned} \tag{43}
 $$
 
-For flat two-dimensional Cartesian plane with perpendicular basis $(e_x, e_y)$:
+For flat two-dimensional Cartesian plane with orthonormal basis $(e_x, e_y)$:
 $$
 \begin{aligned}
-g_{xx} = g_{yy} = \mathbf{e}_{x} \cdot \mathbf{e}_{x} = 1 , \qquad g_{xy} = 0
+g_{xx} = \mathbf{e}_{x} \cdot \mathbf{e}_{x} = 1 , \qquad g_{xy} = 0
 \end{aligned} \tag{44}
 $$
 
@@ -412,16 +412,16 @@ and based on this, we can compute the infinitesimal distance
 
 $$
 \begin{aligned}
-ds^2= 1 \cdot dx^2 + 0 \cdot dxdy + 0 \cdot dydx + 1 \cdot dy^2 = dx^2 + dy^2
+ds^2=  g_{\mu\nu}\,dx^\mu dx^\nu = dx^2 + 0 \cdot dxdy + 0 \cdot dydx + dy^2 = dx^2 + dy^2
 \end{aligned} \tag{46}
 $$
 
 
-Same flat two-dimensional plane, but if we switch to polar coodinates $(r, \theta)$, given its position $P = (r\cos\theta, r\sin\theta)$. By definition,
+Same flat two-dimensional plane, but if we switch to polar coordinates $(r, \theta)$, given its position $P = (r\cos\theta, r\sin\theta)$. By definition,
 $$
 \begin{aligned}
-\mathbf{e}_r = \frac{dP}{dr} = (\cos\theta, \sin \theta) \\
-\mathbf{e}_{\theta} = \frac{dP}{d\theta} = (-r\sin\theta, r\cos \theta)
+\mathbf{e}_r = \frac{\partial P}{\partial r} = (\cos\theta, \sin \theta) \\
+\mathbf{e}_{\theta} = \frac{\partial P}{\partial \theta} = (-r\sin\theta, r\cos \theta)
 \end{aligned} \tag{47}
 $$
 and its metric tensor
@@ -443,14 +443,23 @@ g_{\theta r} & g_{\theta\theta}
 \end{aligned} \tag{48}
 $$
 
-and similar with (46)
+and similarly to (46),
 $$
 \begin{aligned}
-ds^2 = r^2 + r^2\theta^2
+ds^2 = dr^2 + r^2d^2\theta
 \end{aligned} \tag{49}
 $$
 
-### 4.2 Vector Representation and Covariant Derivative
+### 4.2 Torsion-free and Metric-compatible assumptions
+Vectors at different points of spacetime live in different vector spaces, so they cannot be added or compared directly. To compare a vector at a point $P$ with a vector at a nearby point $P'$, we first have to carry one of them over to the other point. The rule for carrying it is called parallel transport, and in general it is something we have to choose.
+
+General relativity assumes this rule has two properties. Torsion-free means that if we take two small vectors and parallel-transport each along the other, they form a closed quadrilateral. Metric compatibility means that the lengths of vectors and the angles between them do not change under parallel transport. Both have rigorous mathematical definitions, which we skip in this post.
+
+We can simplify things with the following picture: imagine our 4-dimensional spacetime as a surface embedded in a higher-dimensional flat space. In this picture all vectors live in one common space, so we can add, compare and differentiate them in the ordinary way, and the two properties above hold automatically instead of being assumed.
+
+However with the ambient space, the derivative of a vector tangent to spacetime may point partly out of spacetime. For the rest of the post, we always keep only the tangent part since the discarded part is perpendicular to every vector in spacetime so lose nothing we can measure.
+
+### 4.3 Vector Representation and Covariant Derivative
 In this section we recap how a vector is represented in the coordinate basis and in the dual basis, then derive their corresponding covariant derivatives.
 
 Coordinate component representation is components times basis vector
@@ -460,7 +469,7 @@ $$
 \end{aligned} \tag{50}
 $$
 
-For example, given basis $\mathbf{e}_{1} = (0,1), \mathbf{e}_{2} = (1,1)$, then vector $(3, 5) = 2\mathbf{e}_{1} + 3 \mathbf{e}_{2}$, thus $V^1 = 2, V^2 = 3, V^{\mu} = (2,3)$. Taking derivative and "rename the dummy index in the second term from $\mu$ to $\lambda$
+For example, given basis $\mathbf{e}_{1} = (0,1), \mathbf{e}_{2} = (1,1)$, then vector $(3, 5) = 2\mathbf{e}_{1} + 3 \mathbf{e}_{2}$, thus $V^1 = 2, V^2 = 3, V^{\mu} = (2,3)$. Taking derivative and rename the dummy index in the second term from $\mu$ to $\lambda$
 $$
 \begin{aligned}
 \nabla_{\nu}\mathbf{V} = \nabla_{\nu} (V^{\mu}\mathbf{e}_{\mu}) = (\partial_{\nu}V^{\mu})\,\mathbf{e}_{\mu} + V^{\lambda}\,\nabla_{\nu} \mathbf{e}_{\lambda}
@@ -470,7 +479,7 @@ $$
 By the definition of the Christoffel symbols,
 $$
 \begin{aligned}
-\nabla_{\nu} \mathbf{e}_{\lambda} = \Gamma^{\mu}_{\nu\lambda} \mathbf{e}_{\mu}
+\nabla_{\nu} \mathbf{e}_{\lambda} = \Gamma^{\mu}_{\lambda\nu} \mathbf{e}_{\mu}
 \end{aligned} \tag{52}
 $$
 
@@ -478,7 +487,7 @@ Replace (52) in (51),
 
 $$
 \begin{aligned}
-\nabla_{\nu}\mathbf{V} = \nabla_{\nu} \left(V^{\mu}\mathbf{e}_{\mu}\right) = \left( \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\nu\lambda} V^{\lambda} \right) \mathbf{e}_{\mu}
+ \nabla_{\nu}\mathbf{V} = \left( \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\lambda\nu} V^{\lambda} \right) \mathbf{e}_{\mu}
 \end{aligned} \tag{53}
 $$
 
@@ -486,13 +495,11 @@ The $\mu$-component of $\nabla_\nu \mathbf{V}$ is conventionally written $\nabla
 
 $$
 \begin{aligned}
-\nabla_{\nu}V^{\mu} = \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\nu\lambda}V^{\lambda}
+\nabla_{\nu}V^{\mu} = \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\lambda\nu}V^{\lambda}
 \end{aligned} \tag{54}
 $$
 
-which is a generalized form of derivative for vector component $V^{\mu}$ moving the in the direction of $x^{\nu}$. The first term $\partial_{\nu}V^{\mu}$ is the changes of the component itself, working exactly as the partial derivitative on a plane. The second term $\Gamma^{\mu}_{\nu\lambda}V^{\lambda}$ is the contribution coming from all components projected onto $\mu$ due to the change of the basis vectors from point to point.
-
-In coordiate system we define dual vector $\mathbf{e}^{\mu}$ (superscript) as
+In coordinate system we define dual basis vector $\mathbf{e}^{\mu}$ (superscript) as
 
 $$
 \begin{aligned}
@@ -507,7 +514,7 @@ $$
 \end{aligned} \tag{56}
 $$
 
-Take derivatives from both sides of (56), and replace the second index variable $\mu$ with $\lambda$
+Take derivative from both sides of (56), and replace the second index variable $\mu$ with $\lambda$
 
 $$
 \begin{aligned}
@@ -529,93 +536,206 @@ $$
 \end{aligned} \tag{59}
 $$
 
-Replace (52) into (59)
+Substitute (52) into (59)
 $$
 \begin{aligned}
-(\nabla_\nu \mathbf{e}^{\mu})\cdot \mathbf{e}_\lambda = - \Gamma^{\sigma}_{\nu\lambda}\, \mathbf{e}^{\mu}\cdot\mathbf{e}_{\sigma} = - \Gamma^{\sigma}_{\nu\lambda}\,\delta^{\mu}_{\sigma} = - \Gamma^{\mu}_{\nu\lambda} \\
+(\nabla_\nu \mathbf{e}^{\mu})\cdot \mathbf{e}_\lambda = - \Gamma^{\sigma}_{\lambda\nu}\, \mathbf{e}^{\mu}\cdot\mathbf{e}_{\sigma} = - \Gamma^{\sigma}_{\lambda\nu}\,\delta^{\mu}_{\sigma} = - \Gamma^{\mu}_{\lambda\nu}
 \end{aligned} \tag{60}
 $$
 
-Multiply $\mathbf{e}^{\lambda}$ from both sides,
+Since (60) gives the $\lambda$-th component of $\nabla_\nu \mathbf{e}^{\mu}$ in the dual basis,
 $$
 \begin{aligned}
-\nabla_\nu \mathbf{e}^{\mu} = - \Gamma^{\mu}_{\nu\lambda}\, \mathbf{e}^{\lambda}
+ \nabla_\nu \mathbf{e}^{\mu} = - \Gamma^{\mu}_{\lambda\nu}\, \mathbf{e}^{\lambda}
 \end{aligned} \tag{61}
 $$
 
 Swap the index variables $\mu$ and $\lambda$ in (61), and replace $\nabla_\nu \mathbf{e}^{\lambda}$ in (57)
 $$
 \begin{aligned}
-\nabla_{\nu}\mathbf{V} = \left( \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\nu\mu} V_{\lambda} \right) \mathbf{e}^{\mu}
+\nabla_{\nu}\mathbf{V} = \left( \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\mu\nu} V_{\lambda} \right) \mathbf{e}^{\mu}
 \end{aligned} \tag{62}
 $$
 
-More commonly, we just care about one specific component $\mu$, so (62) is more commonly written as
+More commonly, we just care about one specific component $\mu$, so (62) is written as
 
 $$
 \begin{aligned}
-\nabla_{\nu}V_{\mu} = \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\nu\mu}V_{\lambda}
+\nabla_{\nu}V_{\mu} = \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\mu\nu}V_{\lambda}
 \end{aligned} \tag{63}
 $$
 
-### 4.3 Metric Tensor and Christoffel Symbol
+Rewrite (54) and (63),
+$$
+\begin{aligned}
+\nabla_{\nu}V^{\mu} = \partial_{\nu}V^{\mu} + \Gamma^{\mu}_{\lambda\nu}V^{\lambda} \\
+\nabla_{\nu}V_{\mu} = \partial_{\nu}V_{\mu} - \Gamma^{\lambda}_{\mu\nu}V_{\lambda}
+\end{aligned}
+$$
 
-We also makes two assumptions. The first assumption is spacetime is torsion-free. Torsion is a deep mathematical concept that we won't go into full details there. For simplicity, torsion-free means taking two small vectors, parallel transport one along the other, and vice versa, they will form a closed quadrilateral in the manifold. Lets see how that will impact the Christoffel symbols.
+which is a generalized form of $\mu$-component of derivative for vector $V^{\mu}$/$V_{\mu}$ moving in the direction of $x^{\nu}$. The first term $\partial_{\nu}V^{\mu}$/$\partial_{\nu}V_{\mu}$ is the change of the component itself. The second term $\Gamma^{\mu}_{\lambda\nu}V^{\lambda}$/$\Gamma^{\lambda}_{\mu\nu}V_{\lambda}$ is the contribution coming from all components projected onto $\mu$ due to the change of the basis/dual vectors among the grid.
 
-Starting at point $P$ with basis $(\mathbf{e}_{\alpha}, \mathbf{e}_{\beta})$, then first move it along $\mathbf{e}_{\alpha}$. Now it is at $P' = P + \delta a \mathbf{e}_{\alpha}$. Grid vectors are defined at each point, and this small movement will change basis to be $(\mathbf{e}_{\alpha}', \mathbf{e}_{\beta}')$.  By Taylor expansion,
+### 4.4 Metric Tensor and Christoffel Symbol
+Starting at point $P$ with basis $(\mathbf{e}_{\alpha}, \mathbf{e}_{\beta})$, then first move it along $\mathbf{e}_{\alpha}$. Now it is at $P' = P + \delta a \mathbf{e}_{\alpha}$, and this small movement will change basis to be $(\mathbf{e}_{\alpha}', \mathbf{e}_{\beta}')$.  By Taylor expansion,
 $$
 \begin{aligned}
 \mathbf{e}_{\beta}' = \mathbf{e}_{\beta} + \delta a \nabla_{\alpha} \mathbf{e}_{\beta} + \text{(higher order)}
-\end{aligned} \tag{51}
+\end{aligned} \tag{64}
 $$
 
 Then moving $P'$ along $\mathbf{e}_{\beta}$ by $\delta b$
 $$
 \begin{aligned}
 P'' = P' + \delta b \mathbf{e}_{\beta}'
-\end{aligned} \tag{52}
+\end{aligned} \tag{65}
 $$
 
-Ignoring the higher order in taylor expansion, and combining (51) and (52)
+Ignoring the higher order in taylor expansion, and combining (64) and (65)
 $$
 \begin{aligned}
 P'' = P + \delta a \mathbf{e}_{\alpha} + \delta b \mathbf{e}_{\beta} + \delta a \delta b \nabla_{\alpha} \mathbf{e}_{\beta}
-\end{aligned} \tag{53}
+\end{aligned} \tag{66}
 $$
 
-Similary, if we transport $P$ first from $\mathbf{e}_{\beta}$ and then $\mathbf{e}_{\alpha}$, then by torsion-free assumption we will arrive at the same $P''$
+Similary, if we transport $P$ first by $\mathbf{e}_{\beta}$ and then $\mathbf{e}_{\alpha}$, we will arrive at the same $P''$
 $$
 \begin{aligned}
-P'' = P + \delta a \mathbf{e}_{\alpha} + \delta b \mathbf{e}_{\beta} + \delta a \delta b \nabla_{\beta} \mathbf{e}_{\alpha}
-\end{aligned} \tag{54}
+P'' = P + \delta b \mathbf{e}_{\beta} + \delta a \mathbf{e}_{\alpha} + \delta a \delta b \nabla_{\beta} \mathbf{e}_{\alpha}
+\end{aligned} \tag{67}
 $$
 
-From (53) and (54), we have
+From (66) and (67), we have
 $$
 \begin{aligned}
 \nabla_{\alpha} \mathbf{e}_{\beta} = \nabla_{\beta} \mathbf{e}_{\alpha}
-\end{aligned} \tag{53}
+\end{aligned} \tag{68}
 $$
 
 By definiton of Christoffel symbol,
 $$
 \begin{aligned}
 \nabla_{\alpha} \mathbf{e}_{\beta} = \Gamma^{\mu}_{\beta\alpha} \mathbf{e}_{\mu}
-\end{aligned} \tag{54}
+\end{aligned} \tag{69}
 $$
 
-Apply (54) to (53), we got the property of symmetry of Christoffel symbol,
+Apply (68) to (69), we got the property of symmetry of Christoffel symbol,
 $$
 \begin{aligned}
 \Gamma^{\mu}_{\beta\alpha} = \Gamma^{\mu}_{\alpha\beta}
-\end{aligned} \tag{54}
+\end{aligned} \tag{70}
 $$
 
-### 4.3 Minkowski Metric
+Now it's ready to connect Christoffel symbols with metric tensor. Take derivative of both sides of (43) w.r.t. the $x^\lambda$,
+$$
+\begin{aligned}
+\partial_{\lambda} g_{\mu\nu} = \partial_{\lambda} \left( \mathbf{e}_{\mu} \cdot \mathbf{e}_{\nu} \right) = (\nabla_{\lambda} \mathbf{e}_{\mu}) \cdot \mathbf{e}_{\nu} + \mathbf{e}_{\mu} \cdot (\nabla_{\lambda} \mathbf{e}_{\nu})
+\end{aligned} \tag{71}
+$$
+
+Substitude (52) in (71)
+$$
+\begin{aligned}
+\partial_{\lambda} g_{\mu\nu} =\Gamma^\sigma_{\mu\lambda}\mathbf{e}_{\sigma} \cdot \mathbf{e}_{\nu} + \Gamma^\sigma_{\nu\lambda}\mathbf{e}_{\sigma} \cdot \mathbf{e}_{\mu} = \Gamma^\sigma_{\mu\lambda} g_{\sigma\nu} + \Gamma^\sigma_{\nu\lambda} g_{\sigma\mu}
+\end{aligned} \tag{72}
+$$
+
+Similarly with (72),
+$$
+\begin{aligned}
+\partial_{\nu} g_{\lambda\mu} = \Gamma^\sigma_{\lambda\nu} g_{\sigma\mu} + \Gamma^\sigma_{\mu\nu} g_{\sigma\lambda}
+\end{aligned} \tag{73}
+$$
+
+$$
+\begin{aligned}
+\partial_{\mu} g_{\nu\lambda} = \Gamma^\sigma_{\nu\mu} g_{\sigma\lambda} + \Gamma^\sigma_{\lambda\mu} g_{\sigma\nu}
+\end{aligned} \tag{74}
+$$
+
+(74) + (73) - (72)
+$$
+\begin{aligned}
+\partial_{\mu} g_{\nu\lambda} + \partial_{\nu} g_{\lambda\mu}  - \partial_{\lambda} g_{\mu\nu} = \\
+\Gamma^\sigma_{\nu\mu} g_{\sigma\lambda} + \Gamma^\sigma_{\lambda\mu} g_{\sigma\nu} + \Gamma^\sigma_{\lambda\nu} g_{\sigma\mu} + \Gamma^\sigma_{\mu\nu} g_{\sigma\lambda} - \Gamma^\sigma_{\mu\lambda} g_{\sigma\nu} + \Gamma^\sigma_{\nu\lambda} g_{\sigma\mu}
+\end{aligned} \tag{75}
+$$
+
+Given the symmetry of Christoffel symbol in (70), and $g_{\mu\nu} = g_{\nu\mu}$, the second and fifth term cancel out, the third and sixth term cancel out, and first and fourth combine together,
+
+$$
+\begin{aligned}
+2 \Gamma^\sigma_{\nu\mu} g_{\sigma\lambda} =  \partial_{\mu} g_{\nu\lambda} + \partial_{\nu} g_{\lambda\mu}  - \partial_{\lambda} g_{\mu\nu}
+\end{aligned} \tag{76}
+$$
+
+Define the inverse metric $g^{\lambda\rho}$ by $g_{\sigma\lambda}\, g^{\lambda\rho} = \delta^{\rho}_{\sigma}$. Multiply both sides of (76) by $g^{\lambda\rho}$ and sum over $\sigma$,
+$$
+\begin{aligned}
+\Gamma^{\rho}_{\nu\mu} = \frac{1}{2}\, g^{\lambda\rho} \left( \partial_{\mu} g_{\nu\lambda} + \partial_{\nu} g_{\lambda\mu} - \partial_{\lambda} g_{\mu\nu} \right)
+\end{aligned} \tag{77}
+$$
+
+Use polar coordinate as an example, recall (48) and its inverse is
+$$
+\begin{aligned}
+\mathbf{g} =
+\begin{bmatrix}
+1 & 0 \\
+0 & r^2
+\end{bmatrix},
+\quad
+\mathbf{g}^{-1} =
+\begin{bmatrix}
+1 & 0 \\
+0 & 1/r^2
+\end{bmatrix}
+\end{aligned}
+$$
+
+and compute Christoffel symbols
+$$
+\begin{aligned}
+\Gamma^r_{\theta\theta} &= \frac{1}{2} g^{rr} (\partial_{\theta} g_{\theta r} + \partial_{\theta} g_{r\theta} - \partial_{r} g_{\theta\theta}) + \frac{1}{2} g^{\theta r} (\partial_{\theta} g_{\theta\theta} + \partial_{\theta} g_{\theta\theta} - \partial_{\theta} g_{\theta\theta}) \\
+&= \frac{1}{2} \cdot 1 \cdot (0 + 0 - 2r) + \frac{1}{2} \cdot 0 \cdot (0 + 0 - 0) = -r \\
+\Gamma^\theta_{r\theta} &= \frac{1}{2} g^{r\theta} (\partial_{\theta} g_{rr} + \partial_{r} g_{r\theta} - \partial_{r} g_{\theta r}) + \frac{1}{2} g^{\theta \theta} (\partial_{\theta} g_{r\theta} + \partial_{r} g_{\theta \theta} - \partial_{\theta} g_{\theta r}) \\
+&= \frac{1}{2} \cdot 0 \cdot (0 + 0 - 0) + \frac{1}{2} \cdot \frac{1}{r^2} \cdot (0 + 2r - 0) = \frac{1}{r} \\
+\end{aligned} \tag{78}
+$$
+
+and compute other components
+$$
+\begin{aligned}
+\Gamma^r_{rr} &= 0, \quad  \Gamma^r_{r\theta} &= 0 \quad \Gamma^\theta_{rr} &= 0 \quad \Gamma^\theta_{\theta \theta} &= 0
+\end{aligned} \tag{78}
+$$
+
+
+### 4.5 Minkowski Metric
+We use $(t, x, y, z)$, where $(x, y, z)$ are Cartesian. The Minkowski metric is
+$$
+\begin{aligned}
+ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2
+\end{aligned} \tag{79}
+$$
+
+Comparing with $ds^2 = g_{\mu\nu}\, dx^{\mu} dx^{\nu}$, the metric tensor is
+$$
+\begin{aligned}
+\mathbf{g} = \begin{bmatrix}
+-c^2 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{aligned} \tag{80}
+$$
+
+All basis vectors are perpendicular to each other and every component is a constant, according to (77) all Christoffel symbols vanish. This means the basis vectors are the same everywhere: the spacetime is flat.
+
 
 ### 4.4 Schwarzschild Metric and Gravitational Acceleration
 
-This section is more interesting but also mathmetical heavy. We will start with a given equation of Schwarzschild Metrics and build mathematical proof to show that gravity is not a force but objects natual movement. First, lets take a look at Schwarzschild Metrics equation
+This section is more interesting but also mathmetical heavy. We will start with a given equation of Schwarzschild Metrics and build mathematical proof to show that gravity is not a force but objects natual movement. First, lets take a look at Schwarzschild Metric equation
 
 $$
 \begin{aligned}
