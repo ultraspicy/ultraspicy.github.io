@@ -1,7 +1,7 @@
 ---
 title: Mathematics of General Relativity (WIP)
 description: understand General Relativity and its mathematical tools
-pubDate: 1970-01-01
+pubDate: 2026-11-16
 tags: [science]
 draft: false
 ---
