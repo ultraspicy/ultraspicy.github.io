@@ -6,10 +6,10 @@ tags: [science]
 draft: false
 ---
 
-## 1. What is General Relativity
-Special Relativity (1905) merged space and time into a single four-dimensional spacetime. General Relativity, published by Einstein in 1915, goes one step further: spacetime is not a fixed stage but a curved geometry, shaped by the energy and matter within it. In this picture gravity is not a pulling force. A freely falling object is simply following the straightest possible path through curved spacetime, called a geodesic, in the same way an object in empty space moves in a straight line at constant speed when nothing acts on it.
+## 1. Intro
+Special Relativity (1905) merged space and time into a single four-dimensional spacetime. General Relativity, published by Einstein in 1915, goes one step further: spacetime is not a fixed stage but a curved geometry. This article covers core concepts, key conclusions and some practical problems of general relativity by Calculus and differential geometry.
 
-John Wheeler summarized the two halves of the theory in one sentence: spacetime tells matter how to move, and matter tells spacetime how to curve.
+This article is highly inspired by ScienceClic Youtube Channel, and follows the orientation of its General Relativity series. Also, to simplify the derivation process, I introduce a stronger assumption over the original ones in section 4.2, which is a little different from other text books.
 
 ## 2. Spacetime, worldline and proper time
 
