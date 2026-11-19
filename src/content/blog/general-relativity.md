@@ -1,5 +1,5 @@
 ---
-title: Mathematics of General Relativity
+title: Mathematics of General Relativity (WIP)
 description: understand General Relativity and its mathematical tools
 pubDate: 2026-11-16
 tags: [science]
